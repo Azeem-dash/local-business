@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Restaurant - Best restaurant in Manchester UK</title>
+    <meta name="description" content="Test Restaurant - Rated 4.7★ by 89 customers. Visit us at 123 Test Street, Manchester M1 1AA.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Restaurant-specific styles */
+        .hero-restaurant {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+            position: relative;
+        }
+        
+        .hero-restaurant::before {
+            content: '🍽️';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.03;
+            right: -5rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .menu-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-item-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .stars {
+            color: #f59e0b;
+            font-size: 1.25rem;
+            letter-spacing: 0.25rem;
+        }
+        
+        .cta-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero hero-restaurant">
+        <div class="container">
+            <div class="animate-fade-in">
+                <h1 class="text-gradient">Test Restaurant</h1>
+                <p style="font-size: 1.5rem; color: var(--gray); margin: 1.5rem 0;">
+                    Restaurant in Manchester UK
+                </p>
+                <div class="stars mb-2">
+                    ★★★★★ 4.7
+                </div>
+                <p style="font-size: 1.125rem; color: var(--gray); margin-bottom: 2rem;">
+                    89 happy customers
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="tel:+44 161 123 4567" class="btn btn-primary btn-large">
+                        📞 Call Now: +44 161 123 4567
+                    </a>
+                    <a href="https://maps.google.com/?q=test" target="_blank" class="btn btn-secondary btn-large">
+                        📍 Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Preview Section -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Menu Highlights</h2>
+                <p style="color: var(--gray); font-size: 1.125rem;">Delicious food, made fresh daily</p>
+            </div>
+            
+            <div class="menu-grid">
+                <div class="menu-item hover-lift">
+                    <div class="menu-item-emoji">🍔</div>
+                    <h3>Signature Burgers</h3>
+                    <p style="color: var(--gray);">Hand-crafted burgers with premium ingredients</p>
+                </div>
+                
+                <div class="menu-item hover-lift">
+                    <div class="menu-item-emoji">🍕</div>
+                    <h3>Wood-Fired Pizza</h3>
+                    <p style="color: var(--gray);">Authentic recipes, perfectly baked</p>
+                </div>
+                
+                <div class="menu-item hover-lift">
+                    <div class="menu-item-emoji">🥗</div>
+                    <h3>Fresh Salads</h3>
+                    <p style="color: var(--gray);">Crisp, healthy, and delicious</p>
+                </div>
+                
+                <div class="menu-item hover-lift">
+                    <div class="menu-item-emoji">🍰</div>
+                    <h3>Homemade Desserts</h3>
+                    <p style="color: var(--gray);">Sweet treats to complete your meal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section>
+        <div class="container">
+            <div class="cta-banner animate-fade-in">
+                <h2 style="color: white; margin-bottom: 1rem;">Ready to Visit?</h2>
+                <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.9;">
+                    Join 89 satisfied customers who love our food
+                </p>
+                <a href="tel:+44 161 123 4567" class="btn btn-large" style="background: white; color: var(--primary);">
+                    📞 Reserve Your Table
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Visit Us</h2>
+            </div>
+            
+            <div class="grid grid-2" style="align-items: center;">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">📍 Location</h3>
+                    <p style="font-size: 1.125rem; color: var(--gray); margin-bottom: 2rem;">
+                        123 Test Street, Manchester M1 1AA
+                    </p>
+                    
+                    <h3 style="margin-bottom: 1rem;">📞 Contact</h3>
+                    <p style="font-size: 1.25rem; color: var(--primary); font-weight: 600; margin-bottom: 2rem;">
+                        +44 161 123 4567
+                    </p>
+                    
+                    <a href="https://maps.google.com/?q=test" target="_blank" class="btn btn-primary">
+                        Open in Google Maps
+                    </a>
+                </div>
+                
+                <div class="card">
+                    
+                    <iframe 
+                        width="100%" 
+                        height="400" 
+                        style="border:0; border-radius: 12px;" 
+                        loading="lazy" 
+                        src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=53.4808,-2.2426&zoom=15">
+                    </iframe>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Showcase -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+                <div class="stars">★★★★★</div>
+                <p style="color: var(--gray); font-size: 1.125rem; margin-top: 1rem;">
+                    4.7 average rating from 89 reviews
+                </p>
+            </div>
+            
+            <div class="grid grid-3">
+                <div class="card hover-lift">
+                    <div class="stars" style="font-size: 1rem;">★★★★★</div>
+                    <p style="margin: 1rem 0; font-style: italic; color: var(--gray);">
+                        "Absolutely amazing food! Best restaurant in Manchester UK. Highly recommended!"
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Happy Customer</p>
+                </div>
+                
+                <div class="card hover-lift">
+                    <div class="stars" style="font-size: 1rem;">★★★★★</div>
+                    <p style="margin: 1rem 0; font-style: italic; color: var(--gray);">
+                        "Great service, delicious food, and wonderful atmosphere. Will definitely come back!"
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Satisfied Diner</p>
+                </div>
+                
+                <div class="card hover-lift">
+                    <div class="stars" style="font-size: 1rem;">★★★★★</div>
+                    <p style="margin: 1rem 0; font-style: italic; color: var(--gray);">
+                        "This is our go-to place! Consistently excellent quality and friendly staff."
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Regular Customer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark); color: white; padding: 3rem 0; text-align: center;">
+        <div class="container">
+            <h2 style="color: white; margin-bottom: 1rem;">Test Restaurant</h2>
+            <p style="color: var(--gray); margin-bottom: 2rem;">123 Test Street, Manchester M1 1AA</p>
+            <p style="font-size: 1.5rem; margin-bottom: 1rem;">
+                <a href="tel:+44 161 123 4567" style="color: white;">+44 161 123 4567</a>
+            </p>
+            <div class="stars">★★★★★ 4.7</div>
+            <p style="color: var(--gray); margin-top: 2rem; font-size: 0.875rem;">
+                © 2026 Test Restaurant. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

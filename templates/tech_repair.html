@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business_name }} - Professional {{ business_category|title }} Services in {{ location }}</title>
+    <meta name="description"
+        content="{{ business_name }} - {{ rating }}★ rated {{ business_category }} in {{ location }}. Expert repairs, fast service. Call {{ phone }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-tech {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 24px rgba(99, 102, 241, 0.2);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .trust-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--glass-border);
+            margin: 0.5rem;
+        }
+
+        .emergency-banner {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Emergency Contact Banner -->
+    <div class="container" style="padding-top: 2rem;">
+        <div class="emergency-banner">
+            <h3 style="color: white; margin-bottom: 0.5rem;">🚨 Need Help Now?</h3>
+            <a href="tel:{{ phone }}"
+                style="color: white; font-size: 1.5rem; font-weight: 700; text-decoration: underline;">
+                {{ phone }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero hero-tech">
+        <div class="container">
+            <div class="animate-fade-in">
+                <h1 class="text-gradient">{{ business_name }}</h1>
+                <p style="font-size: 1.5rem; color: var(--gray); margin: 1.5rem 0;">
+                    Expert {{ business_category|title }} in {{ location }}
+                </p>
+
+                <div style="margin: 2rem 0;">
+                    <span class="trust-badge">
+                        ⭐ {{ rating }} Star Rating
+                    </span>
+                    <span class="trust-badge">
+                        ✅ {{ review_count }}+ Happy Customers
+                    </span>
+                    <span class="trust-badge">
+                        ⚡ Fast Service
+                    </span>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                    <a href="tel:{{ phone }}" class="btn btn-primary btn-large">
+                        📞 Call {{ phone }}
+                    </a>
+                    <a href="{{ google_maps_url }}" target="_blank" class="btn btn-secondary btn-large">
+                        📍 Get Directions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p style="color: var(--gray); font-size: 1.125rem;">Professional repairs you can trust</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card hover-glow">
+                    <div class="service-icon">💻</div>
+                    <h3>Computer Repair</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Hardware & software fixes for laptops and desktops
+                    </p>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">📱</div>
+                    <h3>Phone Repair</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Screen replacements, battery, and more
+                    </p>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">🔧</div>
+                    <h3>Data Recovery</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Recover lost files from damaged devices
+                    </p>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Virus Removal</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Complete malware and virus cleaning
+                    </p>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Upgrades</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        RAM, SSD, and hardware upgrades
+                    </p>
+                </div>
+
+                <div class="service-card hover-glow">
+                    <div class="service-icon">💾</div>
+                    <h3>Backups</h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Secure backup solutions for your data
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Us?</h2>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>Fast Turnaround</h3>
+                    <p style="color: var(--gray);">Most repairs completed same-day</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">✅</div>
+                    <h3>Quality Guaranteed</h3>
+                    <p style="color: var(--gray);">All work backed by warranty</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">💰</div>
+                    <h3>Fair Pricing</h3>
+                    <p style="color: var(--gray);">No hidden fees, transparent quotes</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Customers Say</h2>
+                <p style="color: var(--gray); font-size: 1.125rem;">
+                    ⭐⭐⭐⭐⭐ {{ rating }} from {{ review_count }} reviews
+                </p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card hover-lift">
+                    <div style="color: var(--accent); font-size: 1.25rem; margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
+                        "Fixed my laptop in under an hour! Professional service and fair prices. Highly recommend {{
+                        business_name }}."
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Satisfied Customer</p>
+                </div>
+
+                <div class="card hover-lift">
+                    <div style="color: var(--accent); font-size: 1.25rem; margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
+                        "Best {{ business_category }} in {{ location }}. They recovered all my photos when I thought
+                        they were lost forever!"
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Happy Client</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 4rem 0;">
+        <div class="container text-center">
+            <h2 style="color: white; margin-bottom: 1rem;">Ready to Get Started?</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
+                Visit us at {{ address }} or call for a free quote
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="tel:{{ phone }}" class="btn btn-large" style="background: white; color: var(--primary);">
+                    📞 {{ phone }}
+                </a>
+                <a href="{{ google_maps_url }}" target="_blank" class="btn btn-large"
+                    style="background: transparent; border: 2px solid white; color: white;">
+                    📍 Get Directions
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark); color: white; padding: 3rem 0; text-align: center;">
+        <div class="container">
+            <h3 style="color: white; margin-bottom: 1rem;">{{ business_name }}</h3>
+            <p style="color: var(--gray); margin-bottom: 1rem;">{{ address }}</p>
+            <p style="font-size: 1.25rem; margin-bottom: 1rem;">
+                <a href="tel:{{ phone }}" style="color: white;">{{ phone }}</a>
+            </p>
+            <p style="color: var(--accent);">⭐⭐⭐⭐⭐ {{ rating }} rating</p>
+            <p style="color: var(--gray); margin-top: 2rem; font-size: 0.875rem;">
+                © 2026 {{ business_name }}. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>

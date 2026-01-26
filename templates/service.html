@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ business_name }} - Professional {{ business_category|title }} Services | {{ location }}</title>
+    <meta name="description"
+        content="{{ business_name }} - Top-rated {{ business_category }} in {{ location }}. {{ rating }}★ by {{ review_count }} customers. Call {{ phone }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .hero-service {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .badge {
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <section class="hero hero-service">
+        <div class="container">
+            <div class="animate-fade-in">
+                <h1 class="text-gradient">{{ business_name }}</h1>
+                <p style="font-size: 1.5rem; color: var(--gray); margin: 1.5rem 0;">
+                    Professional {{ business_category|title }} in {{ location }}
+                </p>
+
+                <div class="badge-container">
+                    <div class="badge">
+                        ⭐ {{ rating }} Stars
+                    </div>
+                    <div class="badge">
+                        👥 {{ review_count }}+ Reviews
+                    </div>
+                    <div class="badge">
+                        ✅ Licensed & Insured
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;">
+                    <a href="tel:{{ phone }}" class="btn btn-primary btn-large">
+                        📞 Call Now: {{ phone }}
+                    </a>
+                    <a href="{{ google_maps_url }}" target="_blank" class="btn btn-secondary btn-large">
+                        📍 Find Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Area -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p style="color: var(--gray); font-size: 1.125rem;">Quality work you can count on</p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card hover-lift">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 2rem;">🏠</span>
+                        Residential Services
+                    </h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Expert service for your home with attention to detail and respect for your property.
+                    </p>
+                </div>
+
+                <div class="card hover-lift">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 2rem;">🏢</span>
+                        Commercial Services
+                    </h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Professional solutions for businesses of all sizes. Flexible scheduling available.
+                    </p>
+                </div>
+
+                <div class="card hover-lift">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 2rem;">🚨</span>
+                        Emergency Service
+                    </h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Available when you need us most. Fast response times for urgent situations.
+                    </p>
+                </div>
+
+                <div class="card hover-lift">
+                    <h3 style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span style="font-size: 2rem;">🔧</span>
+                        Maintenance Plans
+                    </h3>
+                    <p style="color: var(--gray); margin-top: 1rem;">
+                        Regular maintenance to keep everything running smoothly and prevent issues.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section style="background: var(--light-gray);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose {{ business_name }}?</h2>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card text-center">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">⚡</div>
+                    <h3>Fast Response</h3>
+                    <p style="color: var(--gray);">We arrive on time and get the job done quickly</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">👨‍🔧</div>
+                    <h3>Expert Team</h3>
+                    <p style="color: var(--gray);">Trained professionals with years of experience</p>
+                </div>
+
+                <div class="card text-center">
+                    <div style="font-size: 3.5rem; margin-bottom: 1rem;">💎</div>
+                    <h3>Quality Work</h3>
+                    <p style="color: var(--gray);">We stand behind our work with guarantees</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Customer Reviews</h2>
+                <p style="color: var(--accent); font-size: 1.5rem; margin-top: 1rem;">
+                    ★★★★★ {{ rating }}
+                </p>
+                <p style="color: var(--gray);">Based on {{ review_count }} reviews</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card hover-lift">
+                    <div style="color: var(--accent); margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
+                        "Excellent service! Professional, punctual, and reasonably priced. Would definitely recommend."
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Happy Customer</p>
+                </div>
+
+                <div class="card hover-lift">
+                    <div style="color: var(--accent); margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
+                        "Best {{ business_category }} in {{ location }}! They solved my problem quickly and explained
+                        everything clearly."
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Satisfied Client</p>
+                </div>
+
+                <div class="card hover-lift">
+                    <div style="color: var(--accent); margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
+                        "Trustworthy and reliable. We use them for all our {{ business_category }} needs."
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Regular Customer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section style="background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%); color: white; padding: 4rem 0;">
+        <div class="container text-center">
+            <h2 style="color: white; margin-bottom: 1rem;">Get a Free Quote Today</h2>
+            <p style="font-size: 1.25rem; margin-bottom: 2rem; opacity: 0.95;">
+                Contact us for professional {{ business_category }} services in {{ location }}
+            </p>
+            <a href="tel:{{ phone }}" class="btn btn-large" style="background: white; color: var(--primary);">
+                📞 Call {{ phone }}
+            </a>
+        </div>
+    </section>
+
+    <!-- Location -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Visit Us</h2>
+            </div>
+
+            <div class="card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+                <h3 style="margin-bottom: 1rem;">📍 Location</h3>
+                <p style="font-size: 1.125rem; color: var(--gray); margin-bottom: 1.5rem;">
+                    {{ address }}
+                </p>
+
+                <h3 style="margin-bottom: 0.5rem;">📞 Phone</h3>
+                <p style="font-size: 1.5rem; color: var(--primary); font-weight: 700; margin-bottom: 1.5rem;">
+                    <a href="tel:{{ phone }}">{{ phone }}</a>
+                </p>
+
+                <a href="{{ google_maps_url }}" target="_blank" class="btn btn-primary">
+                    Open in Google Maps
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: var(--dark); color: white; padding: 3rem 0; text-center;">
+        <div class="container">
+            <h3 style="color: white; margin-bottom: 1rem;">{{ business_name }}</h3>
+            <p style="color: var(--gray); margin-bottom: 1rem;">{{ business_category|title }} • {{ location }}</p>
+            <p style="color: var(--gray); margin-bottom: 1rem;">{{ address }}</p>
+            <p style="font-size: 1.25rem; margin-bottom: 1rem;">
+                <a href="tel:{{ phone }}" style="color: white;">{{ phone }}</a>
+            </p>
+            <p style="color: var(--accent);">⭐ {{ rating }} rating from {{ review_count }} reviews</p>
+            <p style="color: var(--gray); margin-top: 2rem; font-size: 0.875rem;">
+                © 2026 {{ business_name }}. All rights reserved.
+            </p>
+        </div>
+    </footer>
+</body>
+
+</html>
