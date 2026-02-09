@@ -29,17 +29,19 @@ class Database:
             if not HAS_LIBSQL:
                 print("⚠️ TURSO_DATABASE_URL set but 'libsql' package not found. Falling back to local SQLite.")
                 self.conn = sqlite3.connect(self.db_path)
+                self.conn.row_factory = sqlite3.Row  # Enable column access by name
             else:
                 print(f"☁️ Connecting to Turso Cloud Database: {Config.TURSO_DATABASE_URL}")
                 self.conn = libsql.connect(
                     database=Config.TURSO_DATABASE_URL,
                     auth_token=Config.TURSO_AUTH_TOKEN
                 )
+                # libsql doesn't support row_factory, but returns dict-like rows by default
         else:
             print(f"🏠 Connecting to local database: {self.db_path}")
             self.conn = sqlite3.connect(self.db_path)
+            self.conn.row_factory = sqlite3.Row  # Enable column access by name
             
-        self.conn.row_factory = sqlite3.Row  # Enable column access by name
         self.cursor = self.conn.cursor()
     
     def _create_tables(self):
