@@ -34,19 +34,37 @@ class Validator:
         # Calculate lead score (0-100)
         lead_score = self._calculate_lead_score(business, rating_valid, reviews_valid, website_status)
         
-        # Determine if this is a valid lead
-        is_valid_lead = (
-            rating_valid and 
-            reviews_valid and 
-            website_status in ['no_website', 'social_only']
-        )
+        # Determine if this is a valid lead 
+        source = business.get('source', 'google_maps')
+        
+        # For non-map sources, we use role-based validation instead of local business validation
+        if source in ['linkedin', 'clutch']:
+            is_valid_lead = True 
+            # These are already "expert" leads
+        else:
+            # ANY local business with a phone number is a potential lead
+            has_contact = bool(business.get('phone') and business.get('phone').strip())
+            is_valid_lead = has_contact and (rating_valid or reviews_valid)
+        
+        # Super Lead Logic (4.7+ stars AND 50+ reviews)
+        is_super_lead = is_valid_lead and business.get('rating', 0) >= 4.7 and business.get('review_count', 0) >= 50
+        
+        # Outreach Status / Pause Rule
+        # If no owner name, mark as 'blocked' until researched
+        outreach_stage = 'lead'
+        if is_valid_lead and not business.get('owner_name'):
+            outreach_stage = 'blocked_no_owner'
+        elif is_super_lead:
+            outreach_stage = 'super_lead'
         
         # Update business dict
         business['website_status'] = website_status
         business['lead_score'] = lead_score
         business['is_valid_lead'] = is_valid_lead
+        business['is_super_lead'] = is_super_lead
+        business['outreach_stage'] = outreach_stage
         business['validation_notes'] = self._get_validation_notes(
-            rating_valid, reviews_valid, website_status
+            business, rating_valid, reviews_valid, website_status
         )
         
         return business
@@ -136,17 +154,22 @@ class Validator:
         
         # Website status impact
         if website_status == 'no_website':
-            score += 25  # Best prospects - no website at all
+            score += 35  # Prime - needs everything
         elif website_status == 'social_only':
-            score += 15  # Good prospects - only social media
+            score += 25  # Good - needs a real site
         elif website_status == 'broken':
-            score += 10  # Potential prospects - broken website
+            score += 15  # Potential - repair needed
         else:
-            score = 0  # Has working website - not a prospect
+            # Has a website, but might need optimization
+            score += 5
+
+        # High priority for expert sources
+        if business.get('source') in ['linkedin', 'clutch']:
+            score = max(score, 85)
         
         return min(score, 100)
     
-    def _get_validation_notes(self, rating_valid: bool, reviews_valid: bool, 
+    def _get_validation_notes(self, business: Dict, rating_valid: bool, reviews_valid: bool, 
                              website_status: str) -> str:
         """Generate human-readable validation notes."""
         notes = []
@@ -156,11 +179,15 @@ class Validator:
         if not reviews_valid:
             notes.append(f"Reviews below {self.min_reviews}")
         
+        has_contact = bool(business.get('phone') and business.get('phone').strip())
+        if not has_contact:
+            notes.append("❌ Missing Contact Info")
+        
         status_messages = {
-            'no_website': '🎯 No website - Prime prospect!',
-            'social_only': '⭐ Social media only - Good prospect',
-            'has_website': '❌ Has website - Not a prospect',
-            'broken': '⚠️ Broken website - Potential prospect'
+            'no_website': '🎯 High Interest - No website found',
+            'social_only': '⭐ Medium Interest - Social media only',
+            'has_website': '🔹 Low Interest - Already has website',
+            'broken': '⚠️ Potential Interest - Broken website'
         }
         
         notes.append(status_messages.get(website_status, 'Unknown status'))

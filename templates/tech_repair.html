@@ -227,23 +227,23 @@
             </div>
 
             <div class="grid grid-2">
+                {% for snippet in review_snippets %}
                 <div class="card hover-lift">
                     <div style="color: var(--accent); font-size: 1.25rem; margin-bottom: 1rem;">★★★★★</div>
                     <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
-                        "Fixed my laptop in under an hour! Professional service and fair prices. Highly recommend {{
-                        business_name }}."
+                        "{{ snippet }}"
+                    </p>
+                    <p style="font-weight: 600; color: var(--primary);">— Verified Client</p>
+                </div>
+                {% else %}
+                <div class="card hover-lift">
+                    <div style="color: var(--accent); font-size: 1.25rem; margin-bottom: 1rem;">★★★★★</div>
+                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
+                        "Professional service and fair prices. Highly recommend {{ business_name }}."
                     </p>
                     <p style="font-weight: 600; color: var(--primary);">— Satisfied Customer</p>
                 </div>
-
-                <div class="card hover-lift">
-                    <div style="color: var(--accent); font-size: 1.25rem; margin-bottom: 1rem;">★★★★★</div>
-                    <p style="font-style: italic; color: var(--gray); margin-bottom: 1rem;">
-                        "Best {{ business_category }} in {{ location }}. They recovered all my photos when I thought
-                        they were lost forever!"
-                    </p>
-                    <p style="font-weight: 600; color: var(--primary);">— Happy Client</p>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

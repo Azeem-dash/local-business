@@ -6,6 +6,7 @@ from typing import List, Dict
 from config import Config
 from database import Database
 from business_finder import BusinessFinder
+from expert_finder import ExpertFinder
 from validator import Validator
 from demo_generator import DemoGenerator
 from outreach_tracker import OutreachTracker
@@ -18,12 +19,13 @@ class Pipeline:
         self.config = Config
         self.db = Database()
         self.finder = BusinessFinder()
+        self.expert_finder = ExpertFinder()
         self.validator = Validator()
         self.demo_gen = DemoGenerator()
         self.tracker = OutreachTracker(self.db)
     
     def run(self, category: str, location: str, limit: int = 20, 
-            generate_demos: bool = False) -> Dict:
+            generate_demos: bool = False, search_id: int = None) -> Dict:
         """
         Execute the full pipeline.
         
@@ -56,13 +58,15 @@ class Pipeline:
         
         if not valid_leads:
             print("⚠️ No valid leads found after filtering")
-            return {'businesses_found': len(businesses), 'valid_leads': 0}
+            return {'businesses_found': len(businesses), 'valid_leads': 0, 'engine': 'google_maps'}
         
         # Step 3: Save to database
         print(f"Step 3: Saving to database...")
         saved_count = 0
         for business in valid_leads:
             try:
+                if search_id:
+                    business['search_id'] = search_id
                 business_id = self.db.add_business(business)
                 business['id'] = business_id
                 saved_count += 1
@@ -94,7 +98,8 @@ class Pipeline:
             'valid_leads': len(valid_leads),
             'saved_to_db': saved_count,
             'demos_generated': demos_generated,
-            'top_leads': valid_leads[:5]
+            'top_leads': valid_leads[:5],
+            'engine': 'google_maps'
         }
         
         print(f"Total businesses found: {summary['businesses_found']}")
@@ -119,6 +124,52 @@ class Pipeline:
         print(f"{'='*80}\n")
         
         return summary
+
+    def run_expert_search(self, search_type: str, query: str, industry: str = "", 
+                          location: str = "", limit: int = 10, search_id: int = None) -> Dict:
+        """
+        Run specialized search for experts/firms (LinkedIn or Clutch).
+        """
+        print(f"\n{'='*80}")
+        print(f"🚀 SPECIALIZED LEAD SEARCH: {search_type.upper()}")
+        print(f"{'='*80}\n")
+        
+        if search_type == 'linkedin':
+            leads = self.expert_finder.linkedin_xray_search(query, industry, location, limit)
+        elif search_type == 'clutch':
+            leads = self.expert_finder.clutch_search(query, location, limit)
+        else:
+            print(f"❌ Unknown search type: {search_type}")
+            return {'error': 'Unknown search type'}
+
+        if not leads:
+            print("❌ No leads found")
+            return {'error': 'No leads found'}
+            
+        # These are usually high quality, but we can still validate
+        print(f"\nStep 2: Validating {len(leads)} leads...")
+        valid_leads = self.validator.filter_valid_leads(leads)
+        
+        print(f"Step 3: Saving to database...")
+        saved_count = 0
+        for lead in valid_leads:
+            try:
+                # Expert finder results already have 'source'
+                if search_id:
+                    lead['search_id'] = search_id
+                lead_id = self.db.add_business(lead)
+                lead['id'] = lead_id
+                saved_count += 1
+            except Exception as e:
+                print(f"⚠️ Error saving {lead.get('name')}: {e}")
+                
+        print(f"✅ Saved {saved_count} leads from {search_type} to database\n")
+        return {
+            'leads_found': len(leads), 
+            'valid_leads': len(valid_leads),
+            'saved_to_db': saved_count,
+            'engine': search_type
+        }
     
     def run_multi_location(self, category: str, locations: List[str] = None, 
                           limit_per_location: int = 10, generate_demos: bool = False) -> Dict:
@@ -177,6 +228,9 @@ Examples:
     parser.add_argument('--limit', type=int, default=20, help='Max results per search')
     parser.add_argument('--demos', action='store_true', help='Generate demo websites')
     parser.add_argument('--multi-location', action='store_true', help='Search across all configured locations')
+    parser.add_argument('--linkedin', action='store_true', help='Search LinkedIn profiles')
+    parser.add_argument('--clutch', action='store_true', help='Search Clutch directory')
+    parser.add_argument('--industry', help='Industry for LinkedIn search')
     
     args = parser.parse_args()
     
@@ -195,11 +249,21 @@ Examples:
     pipeline = Pipeline()
     
     try:
-        if args.multi_location:
+        if args.linkedin:
+            if not args.category or not args.industry:
+                print("❌ Error: --category (Role) and --industry are required for LinkedIn search")
+                return
+            pipeline.run_expert_search('linkedin', args.category, args.industry, args.location, args.limit)
+        elif args.clutch:
+            if not args.category:
+                print("❌ Error: --category is required for Clutch search")
+                return
+            pipeline.run_expert_search('clutch', args.category, location=args.location, limit=args.limit)
+        elif args.multi_location:
             pipeline.run_multi_location(args.category, generate_demos=args.demos)
         else:
             if not args.location:
-                print("❌ Error: --location is required (or use --multi-location)")
+                print("❌ Error: --location is required (or use --multi-location/--linkedin/--clutch)")
                 return
             
             pipeline.run(args.category, args.location, args.limit, args.demos)

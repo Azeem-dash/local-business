@@ -67,6 +67,7 @@ class DemoGenerator:
             'google_maps_url': business.get('google_maps_url', '#'),
             'latitude': business.get('latitude'),
             'longitude': business.get('longitude'),
+            'review_snippets': business.get('review_snippets', '').split('|') if business.get('review_snippets') else []
         }
         
         # Render template

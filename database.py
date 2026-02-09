@@ -26,6 +26,17 @@ class Database:
     def _create_tables(self):
         """Create database schema if not exists."""
         
+        # Searches table
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS searches (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                query TEXT NOT NULL,
+                location TEXT,
+                engine TEXT,
+                timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+
         # Businesses table
         self.cursor.execute('''
             CREATE TABLE IF NOT EXISTS businesses (
@@ -41,10 +52,25 @@ class Database:
                 website_status TEXT,
                 google_maps_url TEXT,
                 lead_score INTEGER,
+                is_valid_lead BOOLEAN,
+                validation_notes TEXT,
+                owner_name TEXT,
+                last_review_date TEXT,
+                outreach_stage TEXT DEFAULT 'lead',
+                review_snippets TEXT,
                 discovered_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                notes TEXT
+                source TEXT DEFAULT 'google_maps',
+                search_id INTEGER,
+                notes TEXT,
+                FOREIGN KEY (search_id) REFERENCES searches(id)
             )
         ''')
+        
+        # Add search_id column if it doesn't exist (for existing databases)
+        try:
+            self.cursor.execute('ALTER TABLE businesses ADD COLUMN search_id INTEGER REFERENCES searches(id)')
+        except sqlite3.OperationalError:
+            pass # Column already exists
         
         # Demos table
         self.cursor.execute('''
@@ -80,8 +106,10 @@ class Database:
         self.cursor.execute('''
             INSERT INTO businesses 
             (name, category, location, address, phone, rating, review_count, 
-             website, website_status, google_maps_url, lead_score, notes)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+             website, website_status, google_maps_url, lead_score, is_valid_lead, 
+             validation_notes, owner_name, last_review_date, outreach_stage, 
+             review_snippets, source, search_id, notes)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ''', (
             business.get('name'),
             business.get('category'),
@@ -94,6 +122,14 @@ class Database:
             business.get('website_status'),
             business.get('google_maps_url'),
             business.get('lead_score', 0),
+            business.get('is_valid_lead', 0),
+            business.get('validation_notes', ''),
+            business.get('owner_name'),
+            business.get('last_review_date'),
+            business.get('outreach_stage', 'lead'),
+            business.get('review_snippets'),
+            business.get('source', 'google_maps'),
+            business.get('search_id'),
             business.get('notes', '')
         ))
         self.conn.commit()
@@ -104,6 +140,29 @@ class Database:
         self.cursor.execute('SELECT * FROM businesses WHERE id = ?', (business_id,))
         row = self.cursor.fetchone()
         return dict(row) if row else None
+
+    def create_search(self, query: str, location: str, engine: str) -> int:
+        """Create a new search record and return its ID."""
+        self.cursor.execute('''
+            INSERT INTO searches (query, location, engine)
+            VALUES (?, ?, ?)
+        ''', (query, location, engine))
+        self.conn.commit()
+        return self.cursor.lastrowid
+
+    def get_recent_searches(self, limit: int = 10) -> List[Dict]:
+        """Get recent search history."""
+        self.cursor.execute('''
+            SELECT * FROM searches ORDER BY timestamp DESC LIMIT ?
+        ''', (limit,))
+        return [dict(row) for row in self.cursor.fetchall()]
+
+    def get_leads_by_search(self, search_id: int) -> List[Dict]:
+        """Get all leads associated with a search ID."""
+        self.cursor.execute('''
+            SELECT * FROM businesses WHERE search_id = ? ORDER BY lead_score DESC
+        ''', (search_id,))
+        return [dict(row) for row in self.cursor.fetchall()]
     
     def get_all_businesses(self, limit: int = None) -> List[Dict]:
         """Get all businesses, optionally limited."""

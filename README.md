@@ -1,19 +1,19 @@
-# Business Lead Automation Pipeline
+# ProspectVantage: Growth System 🚀
 
-🚀 **Automatically discover high-quality local businesses without websites, generate stunning demo sites, and track outreach efforts.**
+**The ultimate lead generation ecosystem for discovering, validating, and converting high-intent business prospects.**
 
-Perfect for web developers, digital agencies, and freelancers looking to find clients who need websites.
+ProspectVantage streamlines the entire outreach lifecycle—from automated Google Maps discovery to AI-powered lead scoring and personalized demo generation.
 
 ---
 
-## ✨ Features
+## ✨ System Features
 
-- **🔍 Automated Business Discovery**: Search Google Maps for local businesses using SerpApi
-- **✅ Smart Filtering**: Only find businesses with 4.0+ stars, 20+ reviews, and no website
-- **🏆 Lead Scoring**: Automatically ranks prospects (0-100) based on quality signals
-- **🌐 Demo Website Generator**: Creates beautiful, responsive demo sites from templates
-- **📊 CRM Tracking**: SQLite database to track leads and outreach efforts
-- **📧 Message Templates**: Pre-written outreach messages you can customize
+- **🔍 Unified Command Center**: A premium central dashboard to orchestrate all your lead generation engines.
+- **⚡ Real-time Log Streaming**: Transparent, live processing visible directly in your browser.
+- **✅ Validation Intelligence**: Multi-stage validation logic to identify the highest quality prospects.
+- **🌐 Forge Demo Engine**: Automatically generate professionally designed demo sites for your leads.
+- **📊 Adaptive Listing UI**: A high-scannability, row-based interface for deep-dive lead management.
+- **🎯 Smart Scoring**: Rank prospects using 0-100 logic-driven Trust Scores.
 
 ---
 
@@ -26,43 +26,49 @@ Perfect for web developers, digital agencies, and freelancers looking to find cl
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Deployment Guide
 
-### 1. Install Dependencies
+### 1. Environment Configuration
 
 ```bash
+# Register with ProspectVantage local environment
 cd "/Users/a1/Documents/office/AI-scripts and tools/find local business"
 pip install -r requirements.txt
-```
 
-### 2. Configure API Key
-
-```bash
-# Copy the example environment file
+# Setup credentials
 cp .env.example .env
-
-# Edit .env and add your SerpApi key
-# Get a FREE API key at: https://serpapi.com (250 searches/month free)
+# Edit .env and add your SerpApi key (https://serpapi.com)
 ```
 
-Edit `.env` file:
+### 2. Launching the System
+
+Simply start the unified server to access the Command Center:
+
 ```bash
-SERPAPI_KEY=your_api_key_here
-MIN_RATING=4.0
-MIN_REVIEWS=20
+python server.py
 ```
 
-### 3. Run the Pipeline
+### 3. Accessing the Dashboard
 
-```bash
-# Search for restaurants in Manchester
-python pipeline.py --category "restaurants" --location "Manchester UK" --limit 10
+Open your browser and navigate to the local portal:
+[**http://localhost:8000**](http://localhost:8000)
 
-# Search with demo generation
-python pipeline.py --category "tech repair" --location "Austin TX" --demos
+---
 
-# Search across multiple locations
-python pipeline.py --category "barber" --multi-location
+## 📁 Core Architecture
+
+```
+ProspectVantage/
+├── server.py              # Unified API & UI Portal
+├── dashboard.html         # Slate & Indigo Dashboard UI
+├── pipeline.py            # Growth Orchestrator
+├── business_finder.py     # Local Engine (Google Maps)
+├── expert_finder.py       # High Fidelity Engine (LinkedIn/Clutch)
+├── validator.py           # Intelligence & Scoring
+├── demo_generator.py      # Forge Demo Engine
+├── database.py            # Persistence Layer
+├── config.py              # System Configuration
+└── templates/             # UI Templates for Demos
 ```
 
 ---

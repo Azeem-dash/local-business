@@ -103,6 +103,7 @@ class BusinessFinder:
             'latitude': result.get('gps_coordinates', {}).get('latitude'),
             'longitude': result.get('gps_coordinates', {}).get('longitude'),
             'place_id': place_id,
+            'review_snippets': '|'.join([r.get('snippet', '') for r in result.get('reviews_highlights', []) if r.get('snippet')])[:1000],
             'type': result.get('type', ''),
             'hours': result.get('hours', ''),
         }
