@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: prospect-vantage
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    envVars:
+      - key: SERPAPI_KEY
+        sync: false
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
+      - key: MIN_RATING
+        value: "4.0"
+      - key: MIN_REVIEWS
+        value: "20"
