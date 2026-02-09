@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist
+build
+.pytest_cache
+
+# Environment Variables (CRITICAL: Never commit these!)
+.env
+.env.local
+.env.*.local
+
+# Local Database
+*.db
+*.sqlite
+*.sqlite3
+leads_database.db
+local_db_backup.sql
+
+# Generated Files
+generated_demos/
+leads_report_*.html
+
+# Migration Script (contains sensitive data)
+migrate_to_turso.py
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
