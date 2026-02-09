@@ -90,8 +90,8 @@ class Database:
         # Add search_id column if it doesn't exist (for existing databases)
         try:
             self.cursor.execute('ALTER TABLE businesses ADD COLUMN search_id INTEGER REFERENCES searches(id)')
-        except sqlite3.OperationalError:
-            pass # Column already exists
+        except (sqlite3.OperationalError, ValueError):
+            pass  # Column already exists
         
         # Demos table
         self.cursor.execute('''
