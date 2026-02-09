@@ -44,6 +44,17 @@ class Database:
             
         self.cursor = self.conn.cursor()
     
+    def _row_to_dict(self, row) -> Dict:
+        """Convert database row to dictionary (works for both sqlite3.Row and libsql rows)."""
+        if row is None:
+            return None
+        # libsql rows are already dict-like, sqlite3.Row needs conversion
+        if isinstance(row, dict):
+            return row  # libsql row
+        else:
+            return dict(row)  # sqlite3.Row
+
+    
     def _create_tables(self):
         """Create database schema if not exists."""
         
@@ -176,14 +187,14 @@ class Database:
         self.cursor.execute('''
             SELECT * FROM searches ORDER BY timestamp DESC LIMIT ?
         ''', (limit,))
-        return [dict(row) for row in self.cursor.fetchall()]
+        return [self._row_to_dict(row) for row in self.cursor.fetchall()]
 
     def get_leads_by_search(self, search_id: int) -> List[Dict]:
         """Get all leads associated with a search ID."""
         self.cursor.execute('''
             SELECT * FROM businesses WHERE search_id = ? ORDER BY lead_score DESC
         ''', (search_id,))
-        return [dict(row) for row in self.cursor.fetchall()]
+        return [self._row_to_dict(row) for row in self.cursor.fetchall()]
     
     def get_all_businesses(self, limit: int = None) -> List[Dict]:
         """Get all businesses, optionally limited."""
@@ -192,7 +203,7 @@ class Database:
             query += f' LIMIT {limit}'
         
         self.cursor.execute(query)
-        return [dict(row) for row in self.cursor.fetchall()]
+        return [self._row_to_dict(row) for row in self.cursor.fetchall()]
     
     def get_businesses_by_status(self, website_status: str) -> List[Dict]:
         """Get businesses by website status."""
@@ -200,7 +211,7 @@ class Database:
             'SELECT * FROM businesses WHERE website_status = ? ORDER BY lead_score DESC',
             (website_status,)
         )
-        return [dict(row) for row in self.cursor.fetchall()]
+        return [self._row_to_dict(row) for row in self.cursor.fetchall()]
     
     def add_demo(self, business_id: int, template: str, demo_url: str = None, local_path: str = None) -> int:
         """Record a generated demo."""
@@ -235,7 +246,7 @@ class Database:
             'SELECT * FROM outreach WHERE business_id = ? ORDER BY contact_date DESC',
             (business_id,)
         )
-        return [dict(row) for row in self.cursor.fetchall()]
+        return [self._row_to_dict(row) for row in self.cursor.fetchall()]
     
     def get_statistics(self) -> Dict:
         """Get database statistics."""
