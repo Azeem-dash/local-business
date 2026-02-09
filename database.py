@@ -48,11 +48,8 @@ class Database:
         """Convert database row to dictionary (works for both sqlite3.Row and libsql rows)."""
         if row is None:
             return None
-        # libsql rows are already dict-like, sqlite3.Row needs conversion
-        if isinstance(row, dict):
-            return row  # libsql row
-        else:
-            return dict(row)  # sqlite3.Row
+        # Use keys() method which both sqlite3.Row and libsql rows support
+        return {key: row[key] for key in row.keys()}
 
     
     def _create_tables(self):
