@@ -48,8 +48,22 @@ class Database:
         """Convert database row to dictionary (works for both sqlite3.Row and libsql rows)."""
         if row is None:
             return None
-        # Use keys() method which both sqlite3.Row and libsql rows support
-        return {key: row[key] for key in row.keys()}
+        
+        # If it has .keys() (like sqlite3.Row and some dict-like rows)
+        if hasattr(row, 'keys'):
+            return {key: row[key] for key in row.keys()}
+        
+        # If it's a tuple (commonly returned by default libsql-experimental settings)
+        if isinstance(row, (tuple, list)) and self.cursor and self.cursor.description:
+            columns = [d[0] for d in self.cursor.description]
+            return dict(zip(columns, row))
+            
+        # Last resort fallback
+        try:
+            return dict(row)
+        except (TypeError, ValueError):
+            return row
+
 
     
     def _create_tables(self):
