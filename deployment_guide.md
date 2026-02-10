@@ -1,6 +1,6 @@
-# Deployment Guide: ProspectVantage (100% Free)
+# Deployment Guide: Vantage (100% Free)
 
-Your ProspectVantage system is now configured for **100% free cloud deployment**!
+Your Vantage system is now configured for **100% free cloud deployment**!
 
 ## ✅ What's Already Done
 
@@ -29,7 +29,7 @@ First, initialize a git repository and push your code:
 cd "/Users/a1/Documents/office/AI-scripts and tools/find local business"
 git init
 git add .
-git commit -m "Initial commit: ProspectVantage system"
+git commit -m "Initial commit: Vantage system"
 # Create a new repository on GitHub, then:
 git remote add origin YOUR_GITHUB_REPO_URL
 git push -u origin main

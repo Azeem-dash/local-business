@@ -1,8 +1,8 @@
-# ProspectVantage: Growth System 🚀
+# Vantage: Growth System 🚀
 
 **The ultimate lead generation ecosystem for discovering, validating, and converting high-intent business prospects.**
 
-ProspectVantage streamlines the entire outreach lifecycle—from automated Google Maps discovery to AI-powered lead scoring and personalized demo generation.
+Vantage streamlines the entire outreach lifecycle—from automated Google Maps discovery to AI-powered lead scoring and personalized demo generation.
 
 ---
 
@@ -31,7 +31,7 @@ ProspectVantage streamlines the entire outreach lifecycle—from automated Googl
 ### 1. Environment Configuration
 
 ```bash
-# Register with ProspectVantage local environment
+# Register with Vantage local environment
 cd "/Users/a1/Documents/office/AI-scripts and tools/find local business"
 pip install -r requirements.txt
 
@@ -58,7 +58,7 @@ Open your browser and navigate to the local portal:
 ## 📁 Core Architecture
 
 ```
-ProspectVantage/
+Vantage/
 ├── server.py              # Unified API & UI Portal
 ├── dashboard.html         # Slate & Indigo Dashboard UI
 ├── pipeline.py            # Growth Orchestrator

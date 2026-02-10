@@ -13,7 +13,7 @@ from pipeline import Pipeline
 from config import Config
 import os
 
-app = FastAPI(title="LeadForge API")
+app = FastAPI(title="Vantage API")
 
 # Enable CORS for local development
 app.add_middleware(
@@ -46,6 +46,10 @@ class OutputCapture(io.TextIOBase):
 @app.get("/", response_class=HTMLResponse)
 async def get_dashboard():
     return FileResponse("dashboard.html")
+
+@app.get("/vantage-logo.png")
+async def get_logo():
+    return FileResponse("vantage-logo.png")
 
 @app.get("/stream")
 async def stream_logs():
@@ -150,5 +154,5 @@ async def get_latest_results():
 if __name__ == "__main__":
     import uvicorn
     Config.validate()
-    print("🚀 ProspectVantage Server starting at http://localhost:8001")
+    print("🚀 Vantage Server starting at http://localhost:8001")
     uvicorn.run(app, host="0.0.0.0", port=8001)
