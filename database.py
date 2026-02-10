@@ -196,7 +196,7 @@ class Database:
     def get_recent_searches(self, limit: int = 10) -> List[Dict]:
         """Get recent search history."""
         self.cursor.execute('''
-            SELECT * FROM searches ORDER BY timestamp DESC LIMIT ?
+            SELECT * FROM searches ORDER BY timestamp DESC, id DESC LIMIT ?
         ''', (limit,))
         return [self._row_to_dict(row) for row in self.cursor.fetchall()]
 
